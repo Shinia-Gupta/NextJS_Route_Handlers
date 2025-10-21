@@ -19,3 +19,15 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
         return new Response("Comment not found", {status:404})
     }
 }
+
+export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+    const {id}=await params
+    const commentIndex=comments.findIndex(c=>c.id===parseInt(id))
+    if(commentIndex>-1){
+        const deletedComment=comments[commentIndex];
+        comments.splice(commentIndex,1)
+        return Response.json(deletedComment)
+    }else{
+        return new Response("Comment not found", {status:404})
+    }
+}
